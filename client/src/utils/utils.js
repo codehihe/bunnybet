@@ -142,9 +142,11 @@ export const randomIntFromInterval = (min, max)=>{ // min and max included
 }
 
 export const postData = async (url = "", data = {})=>{
+  const serverUrl = process.env.REACT_APP_SERVER_URL || "";
+  const finalUrl = url.startsWith("http") ? url : `${serverUrl}${url}`;
   try {
-    console.log(`[API Request] POST ${url}`, data);
-    const response = await fetch(url, {
+    console.log(`[API Request] POST ${finalUrl}`, data);
+    const response = await fetch(finalUrl, {
         method: "POST",
         mode: "cors",
         cache: "no-cache",
@@ -177,9 +179,11 @@ export const postData = async (url = "", data = {})=>{
 }
 
 export const getData = async (url = "")=>{
+  const serverUrl = process.env.REACT_APP_SERVER_URL || "";
+  const finalUrl = url.startsWith("http") ? url : `${serverUrl}${url}`;
   try {
-    console.log(`[API Request] GET ${url}`);
-    const response = await fetch(url, {
+    console.log(`[API Request] GET ${finalUrl}`);
+    const response = await fetch(finalUrl, {
         method: "GET",
         mode: "cors",
         cache: "no-cache",

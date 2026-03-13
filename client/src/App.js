@@ -9,7 +9,7 @@ import "./css/style.css"
 
 import Page from "./components/pages/page"
 
-const socket = io()
+const socket = io(process.env.REACT_APP_SERVER_URL || "")
 
 function App(){
   	let my_console = function(){
