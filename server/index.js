@@ -558,7 +558,5 @@ io.on('connection', (socket) => {
   })
 })
 
-if (process.env.NODE_ENV !== 'production') {
-  http.listen(PORT, () => { console.log(`Server listening on ${PORT}`) })
-}
+http.listen(PORT, () => { console.log(`Server listening on ${PORT}`) })
 module.exports = app;
