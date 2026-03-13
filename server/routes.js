@@ -23,10 +23,9 @@ const prisma = require('./lib/prisma')
 var jsonParser = express.json({ limit: '50mb' });
 router.use(express.static(path.resolve(__dirname, '../client/build')))
 
-router.post("/api/home", jsonParser, async (req, res, next) => {
+router.get("/api/home", async (req, res) => {
   try {
-    let market = await prisma.market.findMany({ orderBy: { id: 'asc' } }) // Fetch from DB
-    // Merge donations with config overrides (e.g., bank title/text)
+    let market = await prisma.market.findMany({ orderBy: { id: 'asc' } })
     let config = await prisma.config.findMany()
     let configMap = {}
     config.forEach(c => { configMap[c.key] = c.value })
@@ -34,17 +33,41 @@ router.post("/api/home", jsonParser, async (req, res, next) => {
       if (d.type === 'bank') {
         return {
           ...d,
-          title: configMap.DONATION_BANK_TITLE ? configMap.DONATION_BANK_TITLE : d.title,
-          text: configMap.DONATION_BANK_TEXT ? configMap.DONATION_BANK_TEXT : d.text
+          title: configMap.DONATION_BANK_TITLE || d.title,
+          text: configMap.DONATION_BANK_TEXT || d.text
         }
       }
       return d
     })
     let payload = { products, market, finances, profiles, donations: donations_out, career, questions, race_rabbits, keno_prizes, contact }
-    res.send(JSON.stringify(payload))
+    res.json(payload)
   } catch (e) {
-    console.error('Error fetching home data:', e)
-    res.send({ error: true })
+    console.error('Error fetching home data (GET):', e)
+    res.status(500).json({ error: true, message: e.message })
+  }
+})
+
+router.post("/api/home", async (req, res) => {
+  try {
+    let market = await prisma.market.findMany({ orderBy: { id: 'asc' } })
+    let config = await prisma.config.findMany()
+    let configMap = {}
+    config.forEach(c => { configMap[c.key] = c.value })
+    let donations_out = donations.map(d => {
+      if (d.type === 'bank') {
+        return {
+          ...d,
+          title: configMap.DONATION_BANK_TITLE || d.title,
+          text: configMap.DONATION_BANK_TEXT || d.text
+        }
+      }
+      return d
+    })
+    let payload = { products, market, finances, profiles, donations: donations_out, career, questions, race_rabbits, keno_prizes, contact }
+    res.json(payload)
+  } catch (e) {
+    console.error('Error fetching home data (POST):', e)
+    res.status(500).json({ error: true, message: e.message })
   }
 })
 
