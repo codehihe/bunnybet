@@ -9,28 +9,12 @@ import "./css/style.css"
 
 import Page from "./components/pages/page"
 
-const socket = io(process.env.REACT_APP_SERVER_URL || "")
+const socket = io(process.env.REACT_APP_SERVER_URL || "", {
+  transports: ['websocket', 'polling']
+})
 
 function App(){
-  	let my_console = function(){
-		let oldConsole = null	
-		function enable(){
-			if(oldConsole == null) return
-			window['console']['log'] = oldConsole
-			window['console']['warn'] = oldConsole
-			// window['console']['error'] = oldConsole
-		}	
-		function disable(){
-			oldConsole = console.log
-			window['console']['log'] = ()=>{}
-			window['console']['warn'] = ()=>{}
-			// window['console']['error'] = ()=>{}
-		}	
-		return {enable, disable}
-	}()
-
   	useEffect(() => {
-		my_console.disable()
 		socket.connect()		
 		return () => {
 			socket.disconnect()

@@ -7,9 +7,11 @@ var http = require('http').createServer(app)
 const { Server } = require("socket.io");
 const io = new Server(http, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
-  }
+    origin: ["https://bunnybet.vercel.app", "http://localhost:3000", "http://localhost:8088"],
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  transports: ['websocket', 'polling']
 });
 
 app.use((req, res, next) => {
@@ -48,6 +50,19 @@ app.use(withdrawPayment)
 
 var routes = require("./routes")
 app.use(routes)
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date(), env: process.env.NODE_ENV });
+});
+
+app.get('/api/db-check', async (req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ status: 'connected', database: 'ok' });
+  } catch (error) {
+    res.status(500).json({ status: 'error', message: error.message });
+  }
+});
 
 const { encrypt, decrypt } = require('./utils/crypto')
 const { get_device, get_extra_data, check_streak, isValidPhone } = require("./utils/other")
@@ -558,5 +573,13 @@ io.on('connection', (socket) => {
   })
 })
 
-http.listen(PORT, () => { console.log(`Server listening on ${PORT}`) })
+http.listen(PORT, async () => { 
+  console.log(`Server listening on ${PORT}`);
+  try {
+    await prisma.$connect();
+    console.log("Successfully connected to the database via Prisma.");
+  } catch (e) {
+    console.error("Failed to connect to the database on startup:", e);
+  }
+})
 module.exports = app;

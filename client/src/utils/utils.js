@@ -143,6 +143,9 @@ export const randomIntFromInterval = (min, max)=>{ // min and max included
 
 export const postData = async (url = "", data = {})=>{
   const serverUrl = process.env.REACT_APP_SERVER_URL || "";
+  if (!serverUrl && !url.startsWith("http")) {
+    console.warn("[API Warning] REACT_APP_SERVER_URL is not set. Relative requests may fail in production.");
+  }
   const finalUrl = url.startsWith("http") ? url : `${serverUrl}${url}`;
   try {
     console.log(`[API Request] POST ${finalUrl}`, data);
@@ -150,7 +153,7 @@ export const postData = async (url = "", data = {})=>{
         method: "POST",
         mode: "cors",
         cache: "no-cache",
-        credentials: "same-origin",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },
@@ -180,6 +183,9 @@ export const postData = async (url = "", data = {})=>{
 
 export const getData = async (url = "")=>{
   const serverUrl = process.env.REACT_APP_SERVER_URL || "";
+  if (!serverUrl && !url.startsWith("http")) {
+    console.warn("[API Warning] REACT_APP_SERVER_URL is not set. Relative requests may fail in production.");
+  }
   const finalUrl = url.startsWith("http") ? url : `${serverUrl}${url}`;
   try {
     console.log(`[API Request] GET ${finalUrl}`);
@@ -187,7 +193,7 @@ export const getData = async (url = "")=>{
         method: "GET",
         mode: "cors",
         cache: "no-cache",
-        credentials: "same-origin",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },
