@@ -1,0 +1,14 @@
+{
+  "name": "casino-master-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm start --prefix client\" \"npm start --prefix server\"",
+    "build": "npm --prefix client run build && npm --prefix server run build",
+    "update-all": "npm update && npm --prefix client update && npm --prefix server update",
+    "install-all": "npm install && npm --prefix client install && npm --prefix server install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

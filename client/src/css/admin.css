@@ -1,0 +1,407 @@
+/* Admin Dashboard Redesign CSS */
+
+.admin-wrapper {
+    display: flex;
+    min-height: calc(100vh - 80px); /* Adjust based on header height */
+    background: var(--body_color);
+    position: relative;
+}
+
+.admin-sidebar {
+    width: 280px;
+    background: rgba(0, 0, 0, 0.85);
+    border-right: 1px solid var(--dark_color);
+    padding: 20px 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.admin-sidebar-header {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--transparent_color);
+    margin-bottom: 20px;
+}
+
+.admin-sidebar-title {
+    color: var(--color);
+    font-family: 'Grenadier';
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.admin-nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-nav-item {
+    padding: 12px 20px;
+    color: #ccc;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-left: 4px solid transparent;
+    text-align: left;
+    font-size: 0.95rem;
+}
+
+.admin-nav-item:hover {
+    background: var(--transparent_color);
+    color: var(--color);
+}
+
+.admin-nav-item.active {
+    background: var(--transparent_color);
+    color: var(--color);
+    border-left-color: var(--color);
+    font-weight: bold;
+}
+
+.admin-nav-icon {
+    width: 20px;
+    text-align: center;
+}
+
+.admin-main-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    max-width: 100%;
+}
+
+.admin-card {
+    border: 1px solid var(--dark_color);
+    border-radius: var(--radius);
+    background: rgba(0, 0, 0, 0.8) !important;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    margin-bottom: 25px;
+    transition: transform 0.2s ease;
+}
+
+/* Modal specific overrides */
+.admin-modal-content {
+    background: #111 !important;
+    border: 1px solid var(--color) !important;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.8) !important;
+    color: #fff !important;
+}
+
+.admin-modal-header {
+    border-bottom: 1px solid rgba(255, 215, 0, 0.2) !important;
+    background: rgba(255, 215, 0, 0.05) !important;
+}
+
+.admin-modal-footer {
+    border-top: 1px solid rgba(255, 215, 0, 0.1) !important;
+}
+
+.admin-card:hover {
+    transform: translateY(-2px);
+}
+
+.admin-card-header {
+    background: var(--transparent_color) !important;
+    border-bottom: 1px solid var(--dark_color) !important;
+    padding: 15px 20px !important;
+}
+
+.admin-card-title {
+    color: var(--color);
+    font-family: 'Grenadier';
+    margin: 0;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-table-container {
+    background: transparent;
+}
+
+.admin-table {
+    color: #eee !important;
+    margin-bottom: 0;
+}
+
+.admin-table th {
+    background: rgba(255, 215, 0, 0.1) !important;
+    color: var(--color) !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--dark_color) !important;
+}
+
+.admin-table td {
+    vertical-align: middle;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.admin-form-control {
+    background: #ffffff !important;
+    border: 1px solid rgba(255, 215, 0, 0.5) !important;
+    color: #000000 !important;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.admin-form-control:focus {
+    background: #ffffff !important;
+    border-color: var(--color) !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25) !important;
+    color: #000000 !important;
+}
+
+.admin-btn-primary {
+    background: var(--color) !important;
+    border: none !important;
+    color: #000 !important;
+    font-weight: bold !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 8px 20px !important;
+}
+
+.admin-btn-primary:hover {
+    background: var(--light_color) !important;
+    transform: scale(1.02);
+}
+
+.admin-btn-secondary {
+    background: transparent !important;
+    border: 1px solid var(--color) !important;
+    color: var(--color) !important;
+}
+
+.admin-status-indicator {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+/* Fade-in animation for content switches */
+.fade-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Better accessibility and focus states */
+.admin-nav-item:focus-visible,
+.admin-form-control:focus-visible,
+.admin-btn-primary:focus-visible {
+    outline: 2px solid var(--color) !important;
+    outline-offset: 2px;
+}
+
+/* High contrast text for accessibility */
+.text-warning-high-contrast {
+    color: var(--color) !important;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Tooltip-like behavior for table icons */
+.admin-status-indicator {
+    position: relative;
+    cursor: help;
+}
+
+/* Modern card styling enhancements */
+.admin-card {
+    border: 1px solid rgba(255, 215, 0, 0.2) !important;
+    overflow: hidden;
+}
+
+.admin-card-header {
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%) !important;
+}
+
+/* Empty state styling */
+.empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: #888;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    opacity: 0.3;
+}
+
+/* Responsive Table Fixes */
+.table-responsive {
+    scrollbar-width: thin;
+    scrollbar-color: var(--dark_color) transparent;
+    border-radius: var(--radius);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.admin-mobile-toggle {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 1100;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: var(--color);
+    color: #000;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.admin-mobile-toggle:active {
+    transform: scale(0.9);
+}
+
+.admin-sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+    z-index: 1040;
+    animation: fadeIn 0.3s ease;
+}
+
+/* Mobile Nav improvements */
+@media (max-width: 991.98px) {
+    .admin-wrapper {
+        flex-direction: column;
+    }
+    
+    .admin-table {
+        font-size: 0.85rem;
+    }
+
+    .admin-table th {
+        font-size: 0.7rem;
+        padding: 10px 5px;
+    }
+
+    .admin-sidebar {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        bottom: 0;
+        width: 280px;
+        z-index: 1050;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .admin-sidebar.mobile-open {
+        left: 0;
+    }
+
+    .admin-nav {
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .admin-nav-item {
+        padding: 15px 25px;
+        border-left: 4px solid transparent;
+        border-bottom: none;
+        justify-content: flex-start;
+    }
+
+    .admin-nav-item.active {
+        border-left-color: var(--color);
+    }
+
+    .admin-main-content {
+        padding: 80px 15px 30px;
+    }
+
+    .admin-card-header .d-flex {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .admin-card-title {
+        font-size: 1.1rem;
+    }
+    
+    .admin-btn-primary, .admin-btn-secondary {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .admin-search-container {
+        max-width: 100% !important;
+        margin-bottom: 15px;
+    }
+    
+    .mb-4.d-flex.justify-content-between {
+        flex-direction: column;
+        align-items: stretch !important;
+    }
+}
+
+/* Custom Scrollbar */
+.admin-main-content::-webkit-scrollbar {
+    width: 6px;
+}
+.admin-main-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+.admin-main-content::-webkit-scrollbar-thumb {
+    background: var(--dark_color);
+    border-radius: 10px;
+}
+.admin-main-content::-webkit-scrollbar-thumb:hover {
+    background: var(--color);
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    backdrop-filter: blur(2px);
+}
+
+/* Fix for Admin Modal Layering */
+.admin-modal {
+    z-index: 10005 !important; /* Higher than #casino_root (9999) */
+}
+
+.admin-modal-backdrop {
+    z-index: 10004 !important; /* Higher than #casino_root (9999) */
+    background-color: rgba(0, 0, 0, 0.8) !important; /* Ensure visibility and opacity */
+}
+
+/* Lock background scroll when modal is open */
+body.modal-open .admin-main-content {
+    overflow: hidden !important;
+}
